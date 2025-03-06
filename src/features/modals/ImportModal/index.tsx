@@ -35,12 +35,20 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       const format = file.name.substring(lastIndex + 1);
       setFormat(format as FileFormat);
 
-      file.text().then(text => {
-        setContents({ contents: text });
+      // enables UTF-16 Little Endian support
+      file.arrayBuffer().then(buffer => {
+        setContents({ contents: new TextDecoder('utf-16le').decode(buffer) });
         setFile(null);
         setURL("");
         onClose();
       });
+      
+      // file.text().then(text => {
+      //   setContents({ contents: text });
+      //   setFile(null);
+      //   setURL("");
+      //   onClose();
+      // });
 
       gaEvent("import_file", { label: format });
     }
