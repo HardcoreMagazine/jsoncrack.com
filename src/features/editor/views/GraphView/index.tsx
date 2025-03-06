@@ -170,7 +170,9 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   }, 300);
 
   if (aboveSupportedLimit) {
-    return <NotSupported />;
+    // enabling 'UTF-16-LE' would cause 'NotSupported' call, 
+    // even if the file imported is well below the original 500 KB limit
+    // return <NotSupported />;
   }
 
   return (
